@@ -6,9 +6,55 @@ const app = {
     // Current active section ID
     currentSection: 'landing-page',
 
+    regionsData: {
+        'tashkent_city': { name: 'Toshkent shahri', districts: ['Bektemir', 'Mirobod', 'Mirzo Ulug\'bek', 'Sergeli', 'Olmazor', 'Uchtepa', 'Shayxontohur', 'Yashnobod', 'Yunusobod', 'Yakkasaroy', 'Chilonzor'] },
+        'tashkent': { name: 'Toshkent viloyati', districts: ['Sirdaryo', 'Yangiyo\'l', 'Chinoz', 'Zangiota', 'Qibray', 'Parkent', 'Bo\'stonliq', 'Ohangaron', 'Olmaliq', 'Angren', 'Chirchiq', 'Piskent', 'Bekobod'] },
+        'andijan': { name: 'Andijon viloyati', districts: ['Andijon shahri', 'Andijon tumani', 'Asaka', 'Baliqchi', 'Buloqboshi', 'Bo\'z', 'Jalaquduq', 'Izboskan', 'Qo\'rg\'ontepa', 'Marhamat', 'Oltinko\'l', 'Paxtaobod', 'Ulug\'nor', 'Xo\'jaobod', 'Shahrixon'] },
+        'bukhara': { name: 'Buxoro viloyati', districts: ['Buxoro shahri', 'Buxoro tumani', 'Vobkent', 'G\'ijduvon', 'Jondor', 'Kogon', 'Olot', 'Peshku', 'Romitan', 'Shofirkon', 'Qorovulbozor', 'Qorako\'l'] },
+        'fergana': { name: 'Farg\'ona viloyati', districts: ['Farg\'ona shahri', 'Marg\'ilon', 'Qo\'qon', 'Beshariq', 'Bog\'dod', 'Buvayda', 'Dang\'ara', 'Farg\'ona tumani', 'Furqat', 'Oltiariq', 'Qo\'shtepa', 'Quva', 'Rishton', 'So\'x', 'Toshloq', 'Uchko\'prik', 'Yozyovon'] },
+        'jizzakh': { name: 'Jizzax viloyati', districts: ['Jizzax shahri', 'Arnasoy', 'Baxmal', 'Do\'stlik', 'Forish', 'G\'allaorol', 'Mirzacho\'l', 'Paxtakor', 'Yangiobod', 'Zomin', 'Zafarobod', 'Zarbdor'] },
+        'kashkadarya': { name: 'Qashqadaryo viloyati', districts: ['Qarshi', 'G\'uzor', 'Dehqonobod', 'Qamashi', 'Koson', 'Kitob', 'Mirishkor', 'Muborak', 'Nishon', 'Kasbi', 'Ko\'kdala', 'Chiroqchi', 'Shahrisabz', 'Yakkabog\''] },
+        'khorezm': { name: 'Xorazm viloyati', districts: ['Urganch shahri', 'Urganch tumani', 'Bog\'ot', 'Gurlan', 'Xonqa', 'Hazorasp', 'Xiva', 'Qo\'shko\'pir', 'Shovot', 'Yangiariq', 'Yangibozor'] },
+        'namangan': { name: 'Namangan viloyati', districts: ['Namangan shahri', 'Chortoq', 'Chust', 'Kosonsoy', 'Mingbuloq', 'Namangan tumani', 'Norin', 'Pop', 'To\'raqo\'rg\'on', 'Uchqo\'rg\'on', 'Uychi', 'Yangiqo\'rg\'on'] },
+        'navoiy': { name: 'Navoiy viloyati', districts: ['Navoiy shahri', 'Zarafshon', 'Karmana', 'Kanimex', 'Navbahor', 'Nurota', 'Qiziltepa', 'Tomdi', 'Uchquduq', 'Xatirchi'] },
+        'samarkand': { name: 'Samarqand viloyati', districts: ['Samarqand shahri', 'Kattaqo\'rg\'on', 'Bulung\'ur', 'Ishtixon', 'Jomboy', 'Narpay', 'Nurobod', 'Oqdaryo', 'Paxtachi', 'Payariq', 'Pastdarg\'om', 'Qo\'shrabot', 'Toyloq', 'Urgut'] },
+        'sirdaryo': { name: 'Sirdaryo viloyati', districts: ['Guliston', 'Yangiyer', 'Shirin', 'Oqoltin', 'Boyovut', 'Guliston tumani', 'Xovos', 'Sirdaryo tumani', 'Sayxunobod', 'Mirzaobod'] },
+        'surkhandarya': { name: 'Surxondaryo viloyati', districts: ['Termiz', 'Boysun', 'Angor', 'Denov', 'Jarqo\'rg\'on', 'Qiziriq', 'Qumqo\'rg\'on', 'Muzrabot', 'Oltinsoy', 'Sariosiyo', 'Sherobod', 'Sho\'rchi', 'Uzun', 'Bandixon'] },
+        'karakalpakstan': { name: 'Qoraqalpog\'iston Respublikasi', districts: ['Nukus', 'Amudaryo', 'Beruniy', 'Chimboy', 'Ellikqal\'a', 'Kegeyli', 'Mo\'ynoq', 'Nukus tumani', 'Qonliko\'l', 'Qo\'ng\'irot', 'Shumanay', 'Taxtako\'pir', 'To\'rtko\'l', 'Xo\'jayli'] }
+    },
+
     // Initialize App
     init() {
         this.bindEvents();
+        this.populateRegions('worker-region');
+        this.populateRegions('emp-region');
+    },
+
+    populateRegions(regionSelectId) {
+        const regionSelect = document.getElementById(regionSelectId);
+        if (!regionSelect) return;
+        
+        regionSelect.innerHTML = '<option value="" disabled selected>Viloyatni tanlang...</option>';
+        for (const key in this.regionsData) {
+            regionSelect.innerHTML += `<option value="${key}">${this.regionsData[key].name}</option>`;
+        }
+    },
+
+    onRegionChange(regionSelectId, districtSelectId) {
+        const regionSelect = document.getElementById(regionSelectId);
+        const districtSelect = document.getElementById(districtSelectId);
+        if (!regionSelect || !districtSelect) return;
+
+        districtSelect.innerHTML = '<option value="" disabled selected>Tumanni tanlang...</option>';
+        const regionKey = regionSelect.value;
+        if (regionKey && this.regionsData[regionKey]) {
+            this.regionsData[regionKey].districts.forEach(district => {
+                districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+            });
+            districtSelect.disabled = false;
+        } else {
+            districtSelect.disabled = true;
+        }
     },
 
     // Bind Global Events
@@ -74,16 +120,16 @@ const app = {
 
     // Demo Data
     dummyAnnouncements: [
-        { id: 1, type: 'job', title: 'Qurilish uchun 3 ta ishchi kerak', region: 'tashkent', regionLabel: 'Toshkent', price: '150,000 so\'m/kun', date: 'Bugun', contact: '+998 90 111 22 33' },
-        { id: 2, type: 'service', title: 'Professional Santexnik chqirish', region: 'samarkand', regionLabel: 'Samarqand', price: 'Kelishilgan narxda', date: 'Kecha', contact: '+998 90 444 55 66' },
-        { id: 3, type: 'material', title: 'Sement 500 marka - Arzon narxda', region: 'fergana', regionLabel: 'Farg\'ona', price: '45,000 so\'m/qop', date: 'Bugun', contact: '+998 90 777 88 99', store: "Umid Qurilish" },
-        { id: 4, type: 'job', title: 'Toshkent elitniy remont uchun ustalar', region: 'tashkent', regionLabel: 'Toshkent', price: '300,000 so\'m/kun', date: '2 kun oldin', contact: '+998 90 555 44 33' },
-        { id: 5, type: 'service', title: 'Elektr montaj ishlari', region: 'andijan', regionLabel: 'Andijon', price: 'Shartnoma asosida', date: 'Bugun', contact: '+998 90 333 22 11' },
-        { id: 6, type: 'job', title: 'Hovli tozalash uchun yordamchi kerak', region: 'samarkand', regionLabel: 'Samarqand', price: '100,000 so\'m', date: '3 soat oldin', contact: '+998 93 123 45 67' },
-        { id: 7, type: 'material', title: 'Pishgan g\'isht (dostavka ichida)', region: 'tashkent', regionLabel: 'Toshkent', price: '900 so\'m/dona', date: 'Kecha', contact: '+998 99 888 77 66', store: "Stroy Market" },
-        { id: 8, type: 'job', title: 'Yuk tashish xizmati uchun mardikor', region: 'fergana', regionLabel: 'Farg\'ona', price: '120,000 so\'m/kun', date: 'Bugun', contact: '+998 91 555 66 77' },
-        { id: 9, type: 'service', title: 'Kafel terish ustasi (kafelchi)', region: 'tashkent', regionLabel: 'Toshkent', price: '50,000 so\'m/kv', date: '4 kun oldin', contact: '+998 97 999 00 11' },
-        { id: 10, type: 'job', title: 'Bog\'bon kerak (daraxtlarni kesish)', region: 'andijan', regionLabel: 'Andijon', price: '200,000 so\'m', date: 'Bugun', contact: '+998 94 444 33 22' }
+        { id: 1, type: 'service', title: 'Santexnik', region: 'urganch', regionLabel: 'Urganch shahar', price: 'Kelishilgan narxda', date: 'Bugun', contact: '+998 90 111 22 33' },
+        { id: 2, type: 'service', title: 'Santexnik', region: 'urganch', regionLabel: 'Urganch shahar', price: 'Kelishilgan narxda', date: 'Bugun', contact: '+998 90 222 33 44' },
+        { id: 3, type: 'service', title: 'Santexnik', region: 'shovot', regionLabel: 'Shovot tuman', price: 'Kelishilgan narxda', date: 'Bugun', contact: '+998 90 333 44 55' },
+        { id: 4, type: 'service', title: 'Santexnik', region: 'gurlan', regionLabel: 'Gurlan tuman', price: 'Kelishilgan narxda', date: 'Bugun', contact: '+998 90 444 55 66' },
+        { id: 5, type: 'job', title: 'Kunlik ishchi kerak', region: 'shovot', regionLabel: 'Shovot tuman', price: '100,000 so\'m/kun', date: 'Bugun', contact: '+998 90 555 66 77' },
+        { id: 6, type: 'job', title: 'Yuk tushuruvchi kerak', region: 'shovot', regionLabel: 'Shovot tuman', price: '120,000 so\'m', date: 'Bugun', contact: '+998 90 666 77 88' },
+        { id: 7, type: 'service', title: 'Elektrik', region: 'shovot', regionLabel: 'Shovot tuman', price: 'Kelishilgan narxda', date: 'Bugun', contact: '+998 90 777 88 99' },
+        { id: 8, type: 'job', title: 'Kunlik ishchi', region: 'shovot', regionLabel: 'Shovot tuman', price: '100,000 so\'m/kun', date: 'Bugun', contact: '+998 90 888 99 00' },
+        { id: 9, type: 'job', title: 'Kunlik ishchi', region: 'shovot', regionLabel: 'Shovot tuman', price: '100,000 so\'m/kun', date: 'Bugun', contact: '+998 90 999 00 11' },
+        { id: 10, type: 'job', title: 'Kunlik Ishchi', region: 'urganch', regionLabel: 'Urganch shahar', price: '100,000 so\'m/kun', date: 'Bugun', contact: '+998 90 000 11 22' }
     ],
 
     renderAnnouncements(filterRegion = '', filterType = '', filterPrice = '', filterDate = '') {
@@ -143,12 +189,16 @@ const app = {
         container.innerHTML = '';
 
         const matches = [
-            { id: 1, type: 'Santexnik', region: 'Toshkent Shahri', distance: '2.1 km', time: '10 min ago', match: 87 },
-            { id: 2, type: 'Santexnik', region: 'Toshkent Shahri', distance: '1.9 km', time: '1 h ago', match: 88 },
-            { id: 3, type: 'Santexnik', region: "Mirzo Ulug'bek", distance: '3.2 km', time: 'Today', match: 85 },
-            { id: 4, type: 'Santexnik', region: 'Toshkent Shahri', distance: '4.0 km', time: '2 hrs ago', match: 79 },
-            { id: 5, type: 'Santexnik', region: 'Toshkent Shahri', distance: '5.3 km', time: '3 hrs ago', match: 80 },
-            { id: 6, type: 'Santexnik', region: 'Toshkent Shahri', distance: '5.3 km', time: '3 hrs ago', match: 80 }
+            { id: 1, type: 'Santexnik', region: 'Urganch shahar', distance: '3.2 km', time: '10 min ago', match: 87 },
+            { id: 2, type: 'Santexnik', region: 'Urganch shahar', distance: '3.2 km', time: '1 h ago', match: 88 },
+            { id: 3, type: 'Santexnik', region: 'Shovot tuman', distance: '1.1 km', time: 'Today', match: 85 },
+            { id: 4, type: 'Santexnik', region: 'Gurlan tuman', distance: '1.7 km', time: '2 hrs ago', match: 79 },
+            { id: 5, type: 'Kunlik ishchi kerak', region: 'Shovot tuman', distance: '1.1 km', time: '3 hrs ago', match: 80 },
+            { id: 6, type: 'Yuk tushuruvchi kerak', region: 'Shovot tuman', distance: '1.1 km', time: '3 hrs ago', match: 80 },
+            { id: 7, type: 'Elektrik', region: 'Shovot tuman', distance: '1.7 km', time: '4 h ago', match: 75 },
+            { id: 8, type: 'Kunlik ishchi', region: 'Shovot tuman', distance: '1.7 km', time: '2 hrs ago', match: 72 },
+            { id: 9, type: 'Kunlik ishchi', region: 'Shovot tuman', distance: '1.7 km', time: '3 hrs ago', match: 50 },
+            { id: 10, type: 'Kunlik Ishchi', region: 'Urganch shahar', distance: '1.7 km', time: '1 hrs ago', match: 40 },
         ];
 
         matches.forEach(m => {
@@ -238,8 +288,9 @@ const app = {
         const lname = document.getElementById('worker-lname').value;
         const phone = document.getElementById('worker-phone').value;
         const region = document.getElementById('worker-region').value;
+        const district = document.getElementById('worker-district').value;
 
-        if (!fname || !lname || !phone || !region) {
+        if (!fname || !lname || !phone || !region || !district) {
             alert("Iltimos, barcha maydonlarni to'ldiring.");
             return;
         }
@@ -259,8 +310,29 @@ const app = {
         document.getElementById('worker-step-1-indicator').classList.add('active');
     },
 
+    onSkillChange() {
+        const skillSelect = document.getElementById('worker-skill');
+        const otherInput = document.getElementById('worker-skill-other');
+        
+        if (skillSelect && otherInput) {
+            if (skillSelect.value === 'boshqa') {
+                otherInput.classList.remove('hidden');
+                otherInput.required = true;
+            } else {
+                otherInput.classList.add('hidden');
+                otherInput.required = false;
+                otherInput.value = '';
+            }
+        }
+    },
+
     submitWorker() {
-        const skill = document.getElementById('worker-skill').value;
+        const skillSelect = document.getElementById('worker-skill');
+        let skill = skillSelect ? skillSelect.value : '';
+        if (skill === 'boshqa') {
+            skill = document.getElementById('worker-skill-other').value;
+        }
+
         const exp = document.getElementById('worker-experience').value;
 
         if (!skill || !exp) {
@@ -273,16 +345,17 @@ const app = {
         // Reset form
         document.getElementById('worker-form').reset();
         this.workerPrevStep();
-        this.navigate('main-menu');
+        this.navigate('worker-dashboard');
     },
 
     submitEmployer() {
         const phone = document.getElementById('emp-phone').value;
         const region = document.getElementById('emp-region').value;
+        const district = document.getElementById('emp-district').value;
         const job = document.getElementById('emp-job-type').value;
         const payment = document.getElementById('emp-payment').value;
 
-        if (!phone || !region || !job || !payment) {
+        if (!phone || !region || !district || !job || !payment) {
             alert("Barcha qatorlarni to'ldiring.");
             return;
         }
