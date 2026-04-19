@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ishchi AI - Xush kelibsiz</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css?v=2">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Overlay/Navbar if any, or just full screen sections -->
+
+        <!-- ============================================== -->
+        <!-- SECTION 1: LANDING PAGE                        -->
+        <!-- ============================================== -->
+        <section id="landing-page" class="section active">
+            <div class="card landing-card">
+                <div class="logo-icon">
+                    <img src="./images/worker.png" alt="worker icon" class="worker-icon">
+                </div>
+                <h1 class="title">Ishchi AI</h1>
+                <p class="subtitle">Xush kelibsiz</p>
+
+                <div class="form-group">
+                    <label for="language-select">Tilni tanlang / Выберите язык / Select language</label>
+                    <div class="select-wrapper">
+                        <select id="language-select" class="select-input">
+                            <option value="" disabled selected>Tanlang...</option>
+                            <option value="uz">O'zbekcha</option>
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="btn btn-primary" disabled>
+                    Boshlash <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 2: MAIN MENU                           -->
+        <!-- ============================================== -->
+        <section id="main-menu" class="section hidden">
+            <div class="container">
+                <header class="app-header">
+                    <h2>Asosiy Menyu</h2>
+                    <p>Sizga qanday yordam bera olamiz?</p>
+                </header>
+                <div class="card-grid col-3">
+                    <div class="action-card" onclick="app.navigate('worker-registration')">
+                        <div class="card-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                        <h3>Ishchi va Usta</h3>
+                        <p>O'z xizmatlaringizni taklif qiling</p>
+                    </div>
+                    <div class="action-card" onclick="app.navigate('employer-form')">
+                        <div class="card-icon"><i class="fa-solid fa-user-tie"></i></div>
+                        <h3>Ish beruvchi</h3>
+                        <p>Ishchi yoki usta qidiring</p>
+                    </div>
+                    <div class="action-card" onclick="app.navigate('announcements-menu')">
+                        <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                        <h3>E'lonlar</h3>
+                        <p>Barcha e'lonlar va bozorni ko'rish</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 3: WORKER REGISTRATION                 -->
+        <!-- ============================================== -->
+        <section id="worker-registration" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('main-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <div class="card">
+                    <h2 class="title">Ishchi / Usta</h2>
+                    <p class="subtitle">Ro'yxatdan o'tish uchun ma'lumotlarni kiriting</p>
+
+                    <!-- Progress Steps -->
+                    <div class="progress-container">
+                        <div class="progress-step active" id="worker-step-1-indicator">1. Shaxsiy ma'lumotlar</div>
+                        <div class="progress-step" id="worker-step-2-indicator">2. Kasb va malaka</div>
+                    </div>
+
+                    <form id="worker-form" onsubmit="event.preventDefault();">
+                        <!-- Step 1 -->
+                        <div id="worker-step-1">
+                            <div class="form-group">
+                                <label for="worker-fname">Ism</label>
+                                <input type="text" id="worker-fname" class="text-input" placeholder="Ismingiz" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="worker-lname">Familiya</label>
+                                <input type="text" id="worker-lname" class="text-input" placeholder="Familiyangiz"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="worker-region">Viloyat</label>
+                                <div class="select-wrapper">
+                                    <select id="worker-region" class="select-input" required onchange="app.onRegionChange('worker-region', 'worker-district')">
+                                        <option value="" disabled selected>Viloyatni tanlang...</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down select-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="worker-district">Tuman / Shahar</label>
+                                <div class="select-wrapper">
+                                    <select id="worker-district" class="select-input" required disabled>
+                                        <option value="" disabled selected>Avval viloyatni tanlang</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down select-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="worker-phone">Telefon raqam</label>
+                                <input type="tel" id="worker-phone" class="text-input" placeholder="+998 90 123 45 67"
+                                    required>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="app.workerNextStep()">
+                                Keyingisi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div id="worker-step-2" class="hidden">
+                            <div class="form-group">
+                                <label for="worker-skill">Kasb / Ish turi</label>
+                                <div class="select-wrapper">
+                                    <select id="worker-skill" class="select-input" required onchange="app.onSkillChange()">
+                                        <option value="" disabled selected>Kasbingizni tanlang...</option>
+                                        <option value="santexnik">Santexnik</option>
+                                        <option value="kunlik_ishchi">Kunlik ishchi</option>
+                                        <option value="usta">Usta (g'isht teruvchi, suvoqchi, ...)</option>
+                                        <option value="elektrik">Elektrik</option>
+                                        <option value="yuk_tashuvchi">Yuk tashuvchi / Yuk tushuruvchi</option>
+                                        <option value="boshqa">Boshqa</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down select-icon"></i>
+                                </div>
+                                <input type="text" id="worker-skill-other" class="text-input hidden"
+                                    placeholder="Kasbingizni yozing..." style="margin-top: 0.5rem;">
+                            </div>
+                            <div class="form-group">
+                                <label for="worker-experience">Tajriba (yil)</label>
+                                <input type="number" id="worker-experience" class="text-input" min="0" placeholder="0"
+                                    required>
+                            </div>
+
+                            <div class="form-actions"
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
+                                <button type="button" class="btn btn-outline" onclick="app.workerPrevStep()">
+                                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                                </button>
+                                <button type="submit" class="btn btn-secondary" onclick="app.submitWorker()">
+                                    Yuborish <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 4: EMPLOYER FORM                       -->
+        <!-- ============================================== -->
+        <section id="employer-form" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('main-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <div class="card">
+                    <h2 class="title">Ish Beruvchi</h2>
+                    <p class="subtitle">Ishchi izlash uchun e'lon bering</p>
+
+                    <form id="employer-job-form" onsubmit="event.preventDefault(); app.submitEmployer();">
+                        <div class="form-group">
+                            <label for="emp-phone">Telefon raqam</label>
+                            <input type="tel" id="emp-phone" class="text-input" placeholder="+998 90 123 45 67"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-region">Viloyat</label>
+                            <div class="select-wrapper">
+                                <select id="emp-region" class="select-input" required onchange="app.onRegionChange('emp-region', 'emp-district')">
+                                    <option value="" disabled selected>Viloyatni tanlang...</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-district">Tuman / Shahar</label>
+                            <div class="select-wrapper">
+                                <select id="emp-district" class="select-input" required disabled>
+                                    <option value="" disabled selected>Avval viloyatni tanlang</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-job-type">Ish turi</label>
+                            <input type="text" id="emp-job-type" class="text-input"
+                                placeholder="Masalan: Uy ta'miri, Yuk tashish..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emp-payment">Maosh / To'lov (so'm)</label>
+                            <input type="number" id="emp-payment" class="text-input" placeholder="100000" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Ish e'lonini yuborish <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 5: AI PROCESS VISUALIZATION            -->
+        <!-- ============================================== -->
+        <section id="ai-process" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('main-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <div class="card">
+                    <h2 class="title">AI Qanday Ishlaydi?</h2>
+                    <p class="subtitle">Ishchi AI aqlli tizimi jarayoni</p>
+
+                    <div class="ai-flow">
+                        <div class="flow-step">
+                            <div class="flow-icon"><i class="fa-solid fa-user-tie"></i></div>
+                            <h4>Ish beruvchi</h4>
+                            <p>E'lon qoldiradi</p>
+                        </div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+
+                        <div class="flow-step active-pulse">
+                            <div class="flow-icon primary-icon"><i class="fa-solid fa-microchip"></i></div>
+                            <h4>AI Tizim</h4>
+                            <p>Tahlil qiladi va moslaydi</p>
+                        </div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+
+                        <div class="flow-step">
+                            <div class="flow-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                            <h4>Ishchi</h4>
+                            <p>Bildirishnoma oladi</p>
+                        </div>
+                        <div class="flow-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+
+                        <div class="flow-step">
+                            <div class="flow-icon"><i class="fa-solid fa-handshake"></i></div>
+                            <h4>Aloqa</h4>
+                            <p>Bog'lanishadi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 6: ANNOUNCEMENTS MENU                  -->
+        <!-- ============================================== -->
+        <section id="announcements-menu" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('main-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <header class="app-header">
+                    <h2>E'lonlar Bo'limi</h2>
+                    <p>Kerakli bo'limni tanlang</p>
+                </header>
+
+                <div class="card-grid col-2">
+                    <div class="action-card" onclick="app.navigate('announcements-list')">
+                        <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+                        <h3>E'lonlarni ko'rish</h3>
+                        <p>Barcha e'lonlar va xizmatlar</p>
+                    </div>
+                    <div class="action-card" onclick="app.navigate('create-announcement')">
+                        <div class="card-icon"><i class="fa-solid fa-plus"></i></div>
+                        <h3>E'lon joylash</h3>
+                        <p>Yangi e'lon joylash</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 6A: ANNOUNCEMENTS LIST                 -->
+        <!-- ============================================== -->
+        <section id="announcements-list" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('announcements-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <div class="filters-card card" style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">Filtrlar</h3>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; align-items: end;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <div class="select-wrapper">
+                                <select class="select-input" id="filter-region">
+                                    <option value="">Hudud</option>
+                                    <option value="urganch">Urganch (Demo)</option>
+                                    <option value="shovot">Shovot (Demo)</option>
+                                    <option value="gurlan">Gurlan (Demo)</option>
+                                    <!-- Dynamic regions will be added -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <div class="select-wrapper">
+                                <select class="select-input" id="filter-type">
+                                    <option value="">Ish turi</option>
+                                    <option value="job">Ish / Vakansiya</option>
+                                    <option value="service">Xizmat</option>
+                                    <option value="material">Qurilish moli</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <div class="select-wrapper">
+                                <select class="select-input" id="filter-price">
+                                    <option value="">Narx</option>
+                                    <option value="asc">Arzonroq</option>
+                                    <option value="desc">Qimmatroq</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <div class="select-wrapper">
+                                <select class="select-input" id="filter-date">
+                                    <option value="">Sana</option>
+                                    <option value="newest">Yangi e'lonlar</option>
+                                    <option value="oldest">Eski e'lonlar</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon"></i>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="app.applyFilters()"
+                            style="padding: 0.75rem;">Filtrlash</button>
+                    </div>
+                </div>
+
+                <div id="announcements-container">
+                    <!-- Cards will be generated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 6B: CREATE ANNOUNCEMENT                -->
+        <!-- ============================================== -->
+        <section id="create-announcement" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('announcements-menu')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <div class="card">
+                    <h2 class="title" style="margin-bottom: 2rem;">Yangi E'lon</h2>
+
+                    <div class="tabs-container">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="app.switchTab('job')">Ishga e'lon berish</button>
+                            <button class="tab-btn" onclick="app.switchTab('service')">Xizmatlarni taklif
+                                qilish</button>
+                            <button class="tab-btn" onclick="app.switchTab('material')">Qurilish mollari</button>
+                        </div>
+
+                        <div class="tab-content active" id="tab-job">
+                            <form onsubmit="event.preventDefault(); app.submitAd(event, 'job');">
+                                <div class="form-group"><label>Ism, familiya</label><input type="text" id="ad-job-name"
+                                        class="text-input" required></div>
+                                <div class="form-group"><label>Telefon raqam</label><input type="tel" id="ad-job-phone" class="text-input"
+                                        placeholder="+998" required></div>
+                                <div class="form-group">
+                                    <label>Viloyat</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-job-region" class="select-input" required onchange="app.onRegionChange('ad-job-region', 'ad-job-district')">
+                                            <option value="" disabled selected>Viloyatni tanlang...</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tuman / Shahar</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-job-district" class="select-input" required disabled>
+                                            <option value="" disabled selected>Avval viloyatni tanlang</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label>Ish turi</label><input type="text" id="ad-job-type" class="text-input"
+                                        placeholder="masalan: santexnik, yuk tashuvchi" required></div>
+                                <div class="form-group"><label>Ish narxi</label><input type="text" id="ad-job-price" class="text-input"
+                                        placeholder="kelishilgan yoki aniq summa" required></div>
+                                <div
+                                    style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                                    <i class="fa-solid fa-robot"
+                                        style="color: var(--primary); margin-top: 0.25rem;"></i>
+                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;"><strong>AI
+                                            Tavsiyasi:</strong> E'lon joylangandan so'ng, AI tizimi mos ishchilarga
+                                        xabar yuboradi. Eng yaqin va mos ishchilar e'londan xabardor bo'ladi.</p>
+                                </div>
+                                <button type="submit" class="btn btn-primary">E'lonni joylash</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-content hidden" id="tab-service">
+                            <form onsubmit="event.preventDefault(); app.submitAd(event, 'service');">
+                                <div class="form-group"><label>Ism, familiya</label><input type="text" id="ad-svc-name"
+                                        class="text-input" required></div>
+                                <div class="form-group"><label>Telefon raqam</label><input type="tel" id="ad-svc-phone" class="text-input"
+                                        placeholder="+998" required></div>
+                                <div class="form-group">
+                                    <label>Viloyat</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-svc-region" class="select-input" required onchange="app.onRegionChange('ad-svc-region', 'ad-svc-district')">
+                                            <option value="" disabled selected>Viloyatni tanlang...</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tuman / Shahar</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-svc-district" class="select-input" required disabled>
+                                            <option value="" disabled selected>Avval viloyatni tanlang</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label>Ish turi / qila oladigan xizmat</label><input type="text" id="ad-svc-type"
+                                        class="text-input" placeholder="masalan: elektrik, santexnik, bo'yoqchi"
+                                        required></div>
+                                <div
+                                    style="background-color: var(--secondary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                                    <i class="fa-solid fa-ranking-star"
+                                        style="color: var(--secondary); margin-top: 0.25rem;"></i>
+                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;"><strong>AI
+                                            Tavsiyasi:</strong> Ushbu e'lonlar mijozlar tomonidan ko'riladi va AI
+                                        tavsiyasi orqali ustuvorlik bilan chiqadi.</p>
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Xizmatni joylash</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-content hidden" id="tab-material">
+                            <form onsubmit="event.preventDefault(); app.submitAd(event, 'material');">
+                                <div class="form-group"><label>Do'kon nomi yoki egasining ismi</label><input type="text" id="ad-mat-store"
+                                        class="text-input" required></div>
+                                <div class="form-group"><label>Telefon raqam</label><input type="tel" id="ad-mat-phone" class="text-input"
+                                        placeholder="+998" required></div>
+                                <div class="form-group">
+                                    <label>Viloyat</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-mat-region" class="select-input" required onchange="app.onRegionChange('ad-mat-region', 'ad-mat-district')">
+                                            <option value="" disabled selected>Viloyatni tanlang...</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tuman / Shahar</label>
+                                    <div class="select-wrapper">
+                                        <select id="ad-mat-district" class="select-input" required disabled>
+                                            <option value="" disabled selected>Avval viloyatni tanlang</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label>Mahsulot nomi</label><input type="text" id="ad-mat-product"
+                                        class="text-input" required></div>
+                                <div class="form-group">
+                                    <label>Mahsulot rasmi</label>
+                                    <input type="file" class="text-input" accept="image/*"
+                                        style="padding: 0.5rem; background: transparent; border: 1px dashed var(--border-color);">
+                                </div>
+                                <div class="flex-row" style="display:flex; gap:1rem;">
+                                    <div class="form-group" style="flex: 1;"><label>Mahsulot narxi</label><input
+                                            type="text" id="ad-mat-price" class="text-input" required></div>
+                                    <div class="form-group" style="flex: 1;"><label>Yetkazib berish narxi
+                                            (dastavka)</label><input type="text" id="ad-mat-delivery" class="text-input" required></div>
+                                </div>
+                                <div
+                                    style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+                                    <i class="fa-solid fa-store"
+                                        style="color: var(--primary); margin-top: 0.25rem;"></i>
+                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;">
+                                        <strong>Eslatma:</strong> Qurilish mollari onlayn ko'rinadi. Xaridor siz bilan
+                                        bevosita bog'lanadi.
+                                    </p>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Mahsulotni joylash</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 7: WORKER PROFILE & REVIEWS            -->
+        <!-- ============================================== -->
+        <section id="worker-profile" class="section hidden">
+            <div class="container">
+                <a class="nav-back" onclick="app.navigate('announcements-list')">
+                    <i class="fa-solid fa-arrow-left"></i> Orqaga
+                </a>
+
+                <!-- Profile Card -->
+                <div class="card profile-card" style="text-align: center; margin-bottom: 2rem;">
+                    <div class="profile-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                    <h2 class="title" style="margin-bottom: 0.25rem;">Zafar Qo'ldoshev</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;"><i class="fa-solid fa-helmet-safety"
+                            style="margin-right: 0.25rem;"></i> G'isht teruvchi va ustasi</p>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;"><i class="fa-solid fa-location-dot"
+                            style="margin-right: 0.25rem;"></i> Samarqand viloyati</p>
+
+                    <div class="rating-summary">
+                        <div class="stars" style="color: #fbbf24; font-size: 1.5rem; margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <div style="font-size: 1.25rem; font-weight: 700;">4.8 / 5</div>
+                        <div style="color: var(--text-muted); font-size: 0.875rem;">(24 ta sharh)</div>
+                    </div>
+                </div>
+
+                <!-- Reviews List -->
+                <div class="reviews-section card" style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Sharhlar</h3>
+                    <div class="review-item">
+                        <div class="review-header"
+                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong style="font-size: 1rem;">Olimjon T.</strong>
+                            <span style="color: var(--text-muted); font-size: 0.875rem;">1 kun oldin</span>
+                        </div>
+                        <div class="stars" style="color: #fbbf24; font-size: 0.875rem; margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Ishni yorib yubordi. Vaqtida kelib
+                            hamma ishlarni hal qildi. Rahmat!</p>
+                    </div>
+                    <div class="review-item" style="margin-top: 1rem;">
+                        <div class="review-header"
+                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong style="font-size: 1rem;">Akmal aka</strong>
+                            <span style="color: var(--text-muted); font-size: 0.875rem;">3 kun oldin</span>
+                        </div>
+                        <div class="stars" style="color: #fbbf24; font-size: 0.875rem; margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-regular fa-star"></i>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Yaxshi ishlaydi, biroz qimmat ekan
+                            lekin sifatiga javob.</p>
+                    </div>
+                </div>
+
+                <!-- Add Review Form -->
+                <div class="add-review-card card">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Sharh qoldirish</h3>
+                    <form onsubmit="event.preventDefault(); app.submitReview();" id="review-form">
+                        <div class="form-group"><label>Ismingiz</label><input type="text" class="text-input"
+                                placeholder="Kimdanligini bildiring" required></div>
+                        <div class="form-group">
+                            <label>Baho (1-5)</label>
+                            <input type="number" class="text-input" min="1" max="5" value="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fikringiz</label>
+                            <textarea class="text-input" rows="4"
+                                style="resize: vertical; font-family: inherit; font-size: 1rem; padding: 0.875rem 1rem;"
+                                placeholder="Fikringizni shu yerga yozing..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Sharhni yuborish <i
+                                class="fa-solid fa-paper-plane" style="margin-left: 0.5rem;"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- SECTION 8: WORKER DASHBOARD                    -->
+        <!-- ============================================== -->
+        <section id="worker-dashboard" class="section hidden dash-bg">
+            <div class="container" style="max-width: 600px; padding-bottom: 80px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.25rem; font-weight: 700;">Ishchi Profili</h2>
+                    <a class="nav-back" onclick="app.navigate('main-menu')" style="margin-bottom: 0;"><i
+                            class="fa-solid fa-xmark"></i> Yopish</a>
+                </div>
+
+                <!-- Profile Top Card -->
+                <div class="dash-card profile-top">
+                    <!-- Standard placeholder matching the blue cap guy in the screenshot -->
+                    <img src="./images/plumber.png" alt="Avatar" class="dash-avatar" style="border: 2px solid white;">
+                    <div class="profile-info">
+                        <div class="profile-name-row">
+                            <h3 id="dash-fullname">-</h3>
+                            <span class="status-online"><span class="dot"></span> Online</span>
+                            <span class="badge-b6"><i class="fa-solid fa-gem"
+                                    style="margin-right:0.25rem;"></i>B.6</span>
+                        </div>
+                        <p class="job-title-dash" id="dash-skill-district">-</p>
+                        <div class="profile-actions-dash">
+                            <span class="badge-exp"><i class="fa-solid fa-circle-check"></i> Tajriba: <span id="dash-exp">-</span></span>
+                            <button class="btn-contact-dash"><i class="fa-solid fa-phone"></i> <span id="dash-phone">-</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Notification -->
+                <div class="dash-card ai-notification">
+                    <div class="ai-icon-dash"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="ai-text-dash">
+                        <strong>Ishchi AI:</strong> Sizga mos ishlar bor:<br>
+                        <span style="color: var(--text-muted); font-size: 0.875rem;">Sizga mos ishlar bor</span>
+                    </div>
+                    <div class="notif-badge">1</div>
+                </div>
+
+                <!-- Match List Title -->
+                <div class="section-title-row">
+                    <h3>AI sizga mos ishlar</h3>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+
+                <!-- Match List -->
+                <div class="match-list" id="ai-matches-container">
+                    <!-- Cards will be generated by JS -->
+                </div>
+            </div>
+
+            <!-- Bottom Nav -->
+            <div class="bottom-nav">
+                <div class="nav-item active"><i class="fa-solid fa-house"></i></div>
+                <div class="nav-item"><i class="fa-solid fa-users"></i></div>
+                <div class="nav-item add-btn"><i class="fa-solid fa-plus"></i></div>
+                <div class="nav-item" style="position:relative;"><i class="fa-solid fa-message"></i><span
+                        class="notif-badge-small">1</span></div>
+                <div class="nav-item"><i class="fa-solid fa-gear"></i></div>
+            </div>
+        </section>
+
+        <!-- Other sections will be added here -->
+
+        <!-- App Logic -->
+        <script src="app.js"></script>
+</body>
+
+</html>
