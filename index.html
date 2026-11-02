@@ -3,17 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishchi AI - Xush kelibsiz</title>
+    <title>Ishchi AI — ishchi va usta topish | O'zbekiston</title>
+    <meta name="description" content="O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul.">
+    <meta name="keywords" content="Ishchi AI, ishchi, usta, ish e'lonlari, santexnik, elektrik, kunlik ishchi, yuk tashuvchi, qurilish, ish topish, O'zbekiston">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Ishchi AI">
+    <meta name="application-name" content="Ishchi AI">
+    <meta name="theme-color" content="#10b981">
+    <link rel="canonical" href="./">
+    <link rel="icon" href="./images/worker.png" type="image/png">
+    <link rel="apple-touch-icon" href="./images/worker.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ishchi AI">
+    <meta property="og:locale" content="uz_UZ">
+    <meta property="og:locale:alternate" content="ru_RU">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:title" content="Ishchi AI — ishchi va usta topish | O'zbekiston">
+    <meta property="og:description" content="O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul.">
+    <meta property="og:url" content="./">
+    <meta property="og:image" content="./images/worker.png">
+    <meta property="og:image:alt" content="Ishchi AI logotipi">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Ishchi AI — ishchi va usta topish | O'zbekiston">
+    <meta name="twitter:description" content="O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul.">
+    <meta name="twitter:image" content="./images/worker.png">
+    <script type="application/ld+json" id="seo-structured-data">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "Ishchi AI",
+                "alternateName": ["Рабочий ИИ", "Worker AI"],
+                "logo": "images/worker.png",
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Uzbekistan"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "name": "Ishchi AI",
+                "inLanguage": ["uz", "ru", "en"],
+                "description": "O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul.",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Ishchi AI"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "name": "Ishchi AI",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web",
+                "isAccessibleForFree": true,
+                "inLanguage": ["uz", "ru", "en"],
+                "description": "O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "UZS"
+                },
+                "featureList": [
+                    "Ishchi va usta ro'yxati",
+                    "Ish beruvchi e'lonlari",
+                    "Santexnik, elektrik, kunlik ishchi va yuk tashish",
+                    "Qurilish materiallari",
+                    "Viloyat va tuman bo'yicha qidiruv"
+                ]
+            }
+        ]
+    }
+    </script>
+    <script>
+        (function () {
+            var pageUrl = new URL(location.href);
+            pageUrl.hash = "";
+            pageUrl.search = "";
+            var path = pageUrl.pathname.replace(/index\.html$/i, "");
+            if (!path.endsWith("/")) path += "/";
+            pageUrl.pathname = path;
+            var canonicalUrl = pageUrl.href;
+            var imageUrl = new URL("images/worker.png", canonicalUrl).href;
+            var canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) canonical.setAttribute("href", canonicalUrl);
+            function setMeta(selector, value) {
+                var el = document.querySelector(selector);
+                if (el) el.setAttribute("content", value);
+            }
+            setMeta('meta[property="og:url"]', canonicalUrl);
+            setMeta('meta[property="og:image"]', imageUrl);
+            setMeta('meta[property="og:image:secure_url"]', imageUrl);
+            setMeta('meta[name="twitter:image"]', imageUrl);
+            var ld = document.getElementById("seo-structured-data");
+            if (!ld) return;
+            try {
+                var data = JSON.parse(ld.textContent);
+                (data["@graph"] || []).forEach(function (node) {
+                    node.url = canonicalUrl;
+                    if (node["@type"] === "Organization") node.logo = imageUrl;
+                });
+                ld.textContent = JSON.stringify(data);
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" as="image" href="./images/worker.png">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main CSS -->
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 
 <body>
-    <div id="app">
+    <main id="app">
+        <noscript>
+            <p>Ishchi AI — O'zbekiston bo'ylab ishchi va usta topish, ish e'lonini joylash va qurilish materiallarini ko'rish uchun bepul xizmat. Santexnik, elektrik, kunlik ishchi, yuk tashuvchi va qurilish ustalari.</p>
+        </noscript>
         <!-- Overlay/Navbar if any, or just full screen sections -->
 
         <!-- ============================================== -->
@@ -22,7 +135,7 @@
         <section id="landing-page" class="section active">
             <div class="card landing-card">
                 <div class="logo-icon">
-                    <img src="./images/worker.png" alt="worker icon" class="worker-icon">
+                    <img src="./images/worker.png" alt="Ishchi AI logotipi" width="512" height="512" decoding="async" fetchpriority="high" class="worker-icon">
                 </div>
                 <h1 class="title">Ishchi AI</h1>
                 <p class="subtitle">Xush kelibsiz</p>
@@ -56,21 +169,21 @@
                     <p>Sizga qanday yordam bera olamiz?</p>
                 </header>
                 <div class="card-grid col-3">
-                    <div class="action-card" onclick="app.navigate('worker-registration')">
+                    <a class="action-card" href="#worker-registration">
                         <div class="card-icon"><i class="fa-solid fa-helmet-safety"></i></div>
                         <h3>Ishchi va Usta</h3>
                         <p>O'z xizmatlaringizni taklif qiling</p>
-                    </div>
-                    <div class="action-card" onclick="app.navigate('employer-form')">
+                    </a>
+                    <a class="action-card" href="#employer-form">
                         <div class="card-icon"><i class="fa-solid fa-user-tie"></i></div>
                         <h3>Ish beruvchi</h3>
                         <p>Ishchi yoki usta qidiring</p>
-                    </div>
-                    <div class="action-card" onclick="app.navigate('announcements-menu')">
+                    </a>
+                    <a class="action-card" href="#announcements-menu">
                         <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
                         <h3>E'lonlar</h3>
                         <p>Barcha e'lonlar va bozorni ko'rish</p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -80,7 +193,7 @@
         <!-- ============================================== -->
         <section id="worker-registration" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('main-menu')">
+                <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -179,7 +292,7 @@
         <!-- ============================================== -->
         <section id="employer-form" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('main-menu')">
+                <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -234,7 +347,7 @@
         <!-- ============================================== -->
         <section id="ai-process" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('main-menu')">
+                <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -279,7 +392,7 @@
         <!-- ============================================== -->
         <section id="announcements-menu" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('main-menu')">
+                <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -289,16 +402,16 @@
                 </header>
 
                 <div class="card-grid col-2">
-                    <div class="action-card" onclick="app.navigate('announcements-list')">
+                    <a class="action-card" href="#announcements-list">
                         <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
                         <h3>E'lonlarni ko'rish</h3>
                         <p>Barcha e'lonlar va xizmatlar</p>
-                    </div>
-                    <div class="action-card" onclick="app.navigate('create-announcement')">
+                    </a>
+                    <a class="action-card" href="#create-announcement">
                         <div class="card-icon"><i class="fa-solid fa-plus"></i></div>
                         <h3>E'lon joylash</h3>
                         <p>Yangi e'lon joylash</p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -308,7 +421,7 @@
         <!-- ============================================== -->
         <section id="announcements-list" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('announcements-menu')">
+                <a class="nav-back" href="#announcements-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -375,7 +488,7 @@
         <!-- ============================================== -->
         <section id="create-announcement" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('announcements-menu')">
+                <a class="nav-back" href="#announcements-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -528,7 +641,7 @@
         <!-- ============================================== -->
         <section id="worker-profile" class="section hidden">
             <div class="container">
-                <a class="nav-back" onclick="app.navigate('announcements-list')">
+                <a class="nav-back" href="#announcements-list">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
@@ -615,14 +728,14 @@
             <div class="container" style="max-width: 600px; padding-bottom: 80px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h2 style="font-size: 1.25rem; font-weight: 700;">Ishchi Profili</h2>
-                    <a class="nav-back" onclick="app.navigate('main-menu')" style="margin-bottom: 0;"><i
+                    <a class="nav-back" href="#main-menu" style="margin-bottom: 0;"><i
                             class="fa-solid fa-xmark"></i> Yopish</a>
                 </div>
 
                 <!-- Profile Top Card -->
                 <div class="dash-card profile-top">
                     <!-- Standard placeholder matching the blue cap guy in the screenshot -->
-                    <img src="./images/plumber.png" alt="Avatar" class="dash-avatar" style="border: 2px solid white;">
+                    <img src="./images/plumber.png" alt="Ishchi profili" width="60" height="60" class="dash-avatar" style="border: 2px solid white;">
                     <div class="profile-info">
                         <div class="profile-name-row">
                             <h3 id="dash-fullname">-</h3>
@@ -673,8 +786,8 @@
 
         <!-- Other sections will be added here -->
 
-        <!-- App Logic -->
-        <script src="app.js"></script>
+    </main>
+    <script src="app.js"></script>
 </body>
 
 </html>

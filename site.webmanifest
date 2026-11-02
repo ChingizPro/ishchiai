@@ -1,0 +1,19 @@
+{
+  "name": "Ishchi AI",
+  "short_name": "Ishchi AI",
+  "description": "O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#f8fafc",
+  "theme_color": "#10b981",
+  "lang": "uz",
+  "icons": [
+    {
+      "src": "images/worker.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

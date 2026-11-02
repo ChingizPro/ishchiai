@@ -8,6 +8,27 @@ const app = {
     currentLang: 'uz',
     originalTexts: new Map(),
 
+    seoCopy: {
+        uz: {
+            lang: 'uz',
+            locale: 'uz_UZ',
+            title: "Ishchi AI — ishchi va usta topish | O'zbekiston",
+            description: "O'zbekistonda ishchi va usta toping yoki ish e'lonini joylang. Santexnik, elektrik, kunlik ishchi, yuk tashish va qurilish materiallari — Ishchi AI bepul."
+        },
+        ru: {
+            lang: 'ru',
+            locale: 'ru_RU',
+            title: "Ishchi AI — поиск рабочих и мастеров | Узбекистан",
+            description: "Найдите рабочего или мастера в Узбекистане или разместите объявление. Сантехник, электрик, подённая работа, грузчики и стройматериалы — Ishchi AI бесплатно."
+        },
+        en: {
+            lang: 'en',
+            locale: 'en_US',
+            title: "Ishchi AI — find workers and craftsmen | Uzbekistan",
+            description: "Find a worker or craftsman in Uzbekistan, or post a job. Plumbers, electricians, day labor, movers, and building materials — Ishchi AI is free."
+        }
+    },
+
     translations: {
         "Ishchi AI": { ru: "Рабочий ИИ", en: "Worker AI" },
         "Xush kelibsiz": { ru: "Добро пожаловать", en: "Welcome" },
@@ -209,6 +230,7 @@ const app = {
         this.populateRegions('ad-job-region');
         this.populateRegions('ad-svc-region');
         this.populateRegions('ad-mat-region');
+        this.openFromLocation();
     },
 
     showModal(title, message, type = 'success') {
@@ -293,6 +315,59 @@ const app = {
                 this.navigate('main-menu');
             });
         }
+
+        document.addEventListener('click', (event) => {
+            if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            const link = event.target.closest('a[href^="#"]');
+            if (!link) return;
+            const id = link.getAttribute('href').slice(1);
+            const section = document.getElementById(id);
+            if (!section || !section.classList.contains('section')) return;
+            event.preventDefault();
+            this.navigate(id);
+        });
+
+        window.addEventListener('popstate', () => {
+            this.openFromLocation();
+        });
+    },
+
+    openFromLocation() {
+        const id = location.hash.replace(/^#/, '') || 'landing-page';
+        if (id === this.currentSection) return;
+        const section = document.getElementById(id);
+        if (section && section.classList.contains('section')) {
+            this.navigate(id, false);
+        }
+    },
+
+    applySeo(lang) {
+        const copy = this.seoCopy[lang] || this.seoCopy.uz;
+        document.title = copy.title;
+        document.documentElement.lang = copy.lang;
+
+        const setMeta = (selector, value) => {
+            const el = document.querySelector(selector);
+            if (el) el.setAttribute('content', value);
+        };
+        setMeta('meta[name="description"]', copy.description);
+        setMeta('meta[property="og:title"]', copy.title);
+        setMeta('meta[property="og:description"]', copy.description);
+        setMeta('meta[property="og:locale"]', copy.locale);
+        setMeta('meta[name="twitter:title"]', copy.title);
+        setMeta('meta[name="twitter:description"]', copy.description);
+
+        const ld = document.getElementById('seo-structured-data');
+        if (!ld) return;
+        try {
+            const data = JSON.parse(ld.textContent);
+            (data['@graph'] || []).forEach((node) => {
+                if (node['@type'] === 'WebSite' || node['@type'] === 'WebApplication') {
+                    node.description = copy.description;
+                }
+            });
+            ld.textContent = JSON.stringify(data);
+        } catch (e) {}
     },
 
     setLanguage(lang) {
@@ -332,9 +407,10 @@ const app = {
 
         // Also translate dynamic announcements if currently rendered
         if (this.currentSection === 'announcements-list') this.renderAnnouncements();
+        this.applySeo(lang);
     },
 
-    navigate(sectionId) {
+    navigate(sectionId, updateHash = true) {
         const currentEl = document.getElementById(this.currentSection);
         const newEl = document.getElementById(sectionId);
         if (!newEl) {
@@ -349,6 +425,13 @@ const app = {
         void newEl.offsetWidth;
         newEl.classList.add('active');
         this.currentSection = sectionId;
+
+        if (updateHash) {
+            const nextHash = '#' + sectionId;
+            if (location.hash !== nextHash) {
+                history.pushState({ section: sectionId }, '', nextHash);
+            }
+        }
 
         if (sectionId === 'announcements-list') {
             this.renderAnnouncements();
@@ -480,7 +563,7 @@ const app = {
         matches.forEach(m => {
             const html = `
                 <div class="match-card" id="match-${m.id}">
-                    <img src="./images/plumber.png" style="width:50px; height:50px; min-width: 50px;">
+                    <img src="./images/plumber.png" alt="" width="50" height="50" style="width:50px; height:50px; min-width: 50px;">
                     <div class="match-info">
                         <h4>${m.type}</h4>
                         <div class="match-meta">
