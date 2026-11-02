@@ -1,0 +1,6 @@
+# HTTP dan HTTPS ga va www dan asosiy domenga yo'naltirish
+http://ishchiai.uz/*  https://ishchiai.uz/:splat  301!
+https://www.ishchiai.uz/*  https://ishchiai.uz/:splat  301!
+
+# SPA Routing (sahifa to'g'ridan-to'g'ri ochilganda 404 chiqmasligi uchun)
+/*  /index.html  200

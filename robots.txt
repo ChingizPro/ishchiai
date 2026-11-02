@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Add this after the site has a public address, using that exact address:
-# Sitemap: https://your-domain/sitemap.xml
+Sitemap: https://ishchiai.uz/sitemap.xml
