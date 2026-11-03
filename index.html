@@ -119,10 +119,24 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main CSS -->
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=8">
 </head>
 
-<body>
+<body class="on-landing">
+    <header class="topbar">
+        <a class="topbar-brand" href="#main-menu">
+            <img src="./images/worker.png" alt="" width="32" height="32">
+            <span>Ishchi AI</span>
+        </a>
+        <div class="lang-switch select-wrapper">
+            <select id="lang-switch" class="lang-dropdown" aria-label="Til">
+                <option value="uz">O'zbekcha</option>
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-icon"></i>
+        </div>
+    </header>
     <main id="app">
         <noscript>
             <p>Ishchi AI — O'zbekiston bo'ylab ishchi va usta topish, ish e'lonini joylash va qurilish materiallarini ko'rish uchun bepul xizmat. Santexnik, elektrik, kunlik ishchi, yuk tashuvchi va qurilish ustalari.</p>
@@ -139,9 +153,10 @@
                 </div>
                 <h1 class="title">Ishchi AI</h1>
                 <p class="subtitle">Xush kelibsiz</p>
+                <p class="landing-lead">Ishchi va ustalarni toping yoki e'lon joylang.</p>
 
                 <div class="form-group">
-                    <label for="language-select">Tilni tanlang / Выберите язык / Select language</label>
+                    <label for="language-select">Tilni tanlang</label>
                     <div class="select-wrapper">
                         <select id="language-select" class="select-input">
                             <option value="" disabled selected>Tanlang...</option>
@@ -163,7 +178,7 @@
         <!-- SECTION 2: MAIN MENU                           -->
         <!-- ============================================== -->
         <section id="main-menu" class="section hidden">
-            <div class="container">
+            <div class="container page-menu">
                 <header class="app-header">
                     <h2>Asosiy Menyu</h2>
                     <p>Sizga qanday yordam bera olamiz?</p>
@@ -192,7 +207,7 @@
         <!-- SECTION 3: WORKER REGISTRATION                 -->
         <!-- ============================================== -->
         <section id="worker-registration" class="section hidden">
-            <div class="container">
+            <div class="container page-narrow">
                 <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
@@ -272,8 +287,7 @@
                                     required>
                             </div>
 
-                            <div class="form-actions"
-                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
+                            <div class="form-actions">
                                 <button type="button" class="btn btn-outline" onclick="app.workerPrevStep()">
                                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                                 </button>
@@ -291,7 +305,7 @@
         <!-- SECTION 4: EMPLOYER FORM                       -->
         <!-- ============================================== -->
         <section id="employer-form" class="section hidden">
-            <div class="container">
+            <div class="container page-narrow">
                 <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
@@ -346,7 +360,7 @@
         <!-- SECTION 5: AI PROCESS VISUALIZATION            -->
         <!-- ============================================== -->
         <section id="ai-process" class="section hidden">
-            <div class="container">
+            <div class="container page-narrow">
                 <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
@@ -391,7 +405,7 @@
         <!-- SECTION 6: ANNOUNCEMENTS MENU                  -->
         <!-- ============================================== -->
         <section id="announcements-menu" class="section hidden">
-            <div class="container">
+            <div class="container page-menu">
                 <a class="nav-back" href="#main-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
@@ -425,18 +439,16 @@
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
-                <div class="filters-card card" style="margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1rem;">Filtrlar</h3>
-                    <div
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; align-items: end;">
+                <div class="filters-card card">
+                    <h3>Filtrlar</h3>
+                    <div class="form-group">
+                        <input type="search" id="filter-search" class="text-input" placeholder="Kasb, tuman yoki mahsulot..." autocomplete="off">
+                    </div>
+                    <div class="filter-grid">
                         <div class="form-group" style="margin-bottom: 0;">
                             <div class="select-wrapper">
                                 <select class="select-input" id="filter-region">
                                     <option value="">Hudud</option>
-                                    <option value="urganch">Urganch (Demo)</option>
-                                    <option value="shovot">Shovot (Demo)</option>
-                                    <option value="gurlan">Gurlan (Demo)</option>
-                                    <!-- Dynamic regions will be added -->
                                 </select>
                                 <i class="fa-solid fa-chevron-down select-icon"></i>
                             </div>
@@ -472,8 +484,7 @@
                                 <i class="fa-solid fa-chevron-down select-icon"></i>
                             </div>
                         </div>
-                        <button class="btn btn-primary" onclick="app.applyFilters()"
-                            style="padding: 0.75rem;">Filtrlash</button>
+                        <button class="btn btn-primary" onclick="app.applyFilters()">Filtrlash</button>
                     </div>
                 </div>
 
@@ -487,13 +498,13 @@
         <!-- SECTION 6B: CREATE ANNOUNCEMENT                -->
         <!-- ============================================== -->
         <section id="create-announcement" class="section hidden">
-            <div class="container">
+            <div class="container page-narrow">
                 <a class="nav-back" href="#announcements-menu">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
                 <div class="card">
-                    <h2 class="title" style="margin-bottom: 2rem;">Yangi E'lon</h2>
+                    <h2 class="title">Yangi E'lon</h2>
 
                     <div class="tabs-container">
                         <div class="tab-buttons">
@@ -531,11 +542,9 @@
                                         placeholder="masalan: santexnik, yuk tashuvchi" required></div>
                                 <div class="form-group"><label>Ish narxi</label><input type="text" id="ad-job-price" class="text-input"
                                         placeholder="kelishilgan yoki aniq summa" required></div>
-                                <div
-                                    style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                    <i class="fa-solid fa-robot"
-                                        style="color: var(--primary); margin-top: 0.25rem;"></i>
-                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;"><strong>AI
+                                <div class="callout">
+                                    <i class="fa-solid fa-robot"></i>
+                                    <p><strong>AI
                                             Tavsiyasi:</strong> E'lon joylangandan so'ng, AI tizimi mos ishchilarga
                                         xabar yuboradi. Eng yaqin va mos ishchilar e'londan xabardor bo'ladi.</p>
                                 </div>
@@ -570,11 +579,9 @@
                                 <div class="form-group"><label>Ish turi / qila oladigan xizmat</label><input type="text" id="ad-svc-type"
                                         class="text-input" placeholder="masalan: elektrik, santexnik, bo'yoqchi"
                                         required></div>
-                                <div
-                                    style="background-color: var(--secondary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                    <i class="fa-solid fa-ranking-star"
-                                        style="color: var(--secondary); margin-top: 0.25rem;"></i>
-                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;"><strong>AI
+                                <div class="callout callout-sky">
+                                    <i class="fa-solid fa-ranking-star"></i>
+                                    <p><strong>AI
                                             Tavsiyasi:</strong> Ushbu e'lonlar mijozlar tomonidan ko'riladi va AI
                                         tavsiyasi orqali ustuvorlik bilan chiqadi.</p>
                                 </div>
@@ -609,21 +616,26 @@
                                 <div class="form-group"><label>Mahsulot nomi</label><input type="text" id="ad-mat-product"
                                         class="text-input" required></div>
                                 <div class="form-group">
-                                    <label>Mahsulot rasmi</label>
-                                    <input type="file" class="text-input" accept="image/*"
-                                        style="padding: 0.5rem; background: transparent; border: 1px dashed var(--border-color);">
+                                    <label for="ad-mat-image">Mahsulot rasmi</label>
+                                    <div class="file-picker">
+                                        <input type="file" id="ad-mat-image" accept="image/*">
+                                        <span class="file-picker-icon"><i class="fa-solid fa-image"></i></span>
+                                        <span class="file-picker-copy">
+                                            <span class="file-picker-name">Fayl tanlanmagan</span>
+                                            <span class="file-picker-hint">Rasm tanlash</span>
+                                        </span>
+                                        <img class="file-picker-preview" alt="" hidden>
+                                    </div>
                                 </div>
-                                <div class="flex-row" style="display:flex; gap:1rem;">
+                                <div class="price-row">
                                     <div class="form-group" style="flex: 1;"><label>Mahsulot narxi</label><input
                                             type="text" id="ad-mat-price" class="text-input" required></div>
                                     <div class="form-group" style="flex: 1;"><label>Yetkazib berish narxi
                                             (dastavka)</label><input type="text" id="ad-mat-delivery" class="text-input" required></div>
                                 </div>
-                                <div
-                                    style="background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-                                    <i class="fa-solid fa-store"
-                                        style="color: var(--primary); margin-top: 0.25rem;"></i>
-                                    <p style="font-size: 0.875rem; color: var(--text-color); margin: 0;">
+                                <div class="callout">
+                                    <i class="fa-solid fa-store"></i>
+                                    <p>
                                         <strong>Eslatma:</strong> Qurilish mollari onlayn ko'rinadi. Xaridor siz bilan
                                         bevosita bog'lanadi.
                                     </p>
@@ -640,21 +652,21 @@
         <!-- SECTION 7: WORKER PROFILE & REVIEWS            -->
         <!-- ============================================== -->
         <section id="worker-profile" class="section hidden">
-            <div class="container">
+            <div class="container page-narrow">
                 <a class="nav-back" href="#announcements-list">
                     <i class="fa-solid fa-arrow-left"></i> Orqaga
                 </a>
 
                 <!-- Profile Card -->
-                <div class="card profile-card" style="text-align: center; margin-bottom: 2rem;">
+                <div class="card profile-card">
                     <div class="profile-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
-                    <h2 class="title" style="margin-bottom: 0.25rem;">Zafar Qo'ldoshev</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;"><i class="fa-solid fa-helmet-safety"
+                    <h2 class="title" id="profile-name" style="margin-bottom: 0.25rem;">Zafar Qo'ldoshev</h2>
+                    <p id="profile-role" style="color: var(--text-muted); margin-bottom: 0.5rem;"><i class="fa-solid fa-helmet-safety"
                             style="margin-right: 0.25rem;"></i> G'isht teruvchi va ustasi</p>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;"><i class="fa-solid fa-location-dot"
+                    <p id="profile-location" style="color: var(--text-muted); margin-bottom: 1.5rem;"><i class="fa-solid fa-location-dot"
                             style="margin-right: 0.25rem;"></i> Samarqand viloyati</p>
 
-                    <div class="rating-summary">
+                    <div class="rating-summary" id="profile-summary">
                         <div class="stars" style="color: #fbbf24; font-size: 1.5rem; margin-bottom: 0.5rem;">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
                                 class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
@@ -666,8 +678,8 @@
                 </div>
 
                 <!-- Reviews List -->
-                <div class="reviews-section card" style="margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Sharhlar</h3>
+                <div class="reviews-section card" id="profile-reviews">
+                    <h3 class="section-heading">Sharhlar</h3>
                     <div class="review-item">
                         <div class="review-header"
                             style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -700,7 +712,7 @@
 
                 <!-- Add Review Form -->
                 <div class="add-review-card card">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Sharh qoldirish</h3>
+                    <h3 class="section-heading">Sharh qoldirish</h3>
                     <form onsubmit="event.preventDefault(); app.submitReview();" id="review-form">
                         <div class="form-group"><label>Ismingiz</label><input type="text" class="text-input"
                                 placeholder="Kimdanligini bildiring" required></div>
@@ -725,17 +737,17 @@
         <!-- SECTION 8: WORKER DASHBOARD                    -->
         <!-- ============================================== -->
         <section id="worker-dashboard" class="section hidden dash-bg">
-            <div class="container" style="max-width: 600px; padding-bottom: 80px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h2 style="font-size: 1.25rem; font-weight: 700;">Ishchi Profili</h2>
-                    <a class="nav-back" href="#main-menu" style="margin-bottom: 0;"><i
+            <div class="container dash-shell">
+                <div class="dash-header">
+                    <h2>Ishchi Profili</h2>
+                    <a class="nav-back" href="#main-menu"><i
                             class="fa-solid fa-xmark"></i> Yopish</a>
                 </div>
 
                 <!-- Profile Top Card -->
                 <div class="dash-card profile-top">
                     <!-- Standard placeholder matching the blue cap guy in the screenshot -->
-                    <img src="./images/plumber.png" alt="Ishchi profili" width="60" height="60" class="dash-avatar" style="border: 2px solid white;">
+                    <img src="./images/worker.png" alt="Ishchi profili" width="60" height="60" class="dash-avatar" style="border: 2px solid white;">
                     <div class="profile-info">
                         <div class="profile-name-row">
                             <h3 id="dash-fullname">-</h3>
@@ -787,7 +799,7 @@
         <!-- Other sections will be added here -->
 
     </main>
-    <script src="app.js"></script>
+    <script src="app.js?v=7"></script>
 </body>
 
 </html>
